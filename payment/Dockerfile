@@ -4,5 +4,5 @@ WORKDIR /opt/server
 COPY *.py .
 COPY requirements.txt .
 COPY payment.ini .
-RUN dnf install -r requirements.txt
+RUN pip3 install -r requirements.txt
 CMD ["uwsgi" , "--ini", "payment.ini"]
