@@ -1,0 +1,8 @@
+FROM python:3.9
+EXPOSE 8080
+WORKDIR /opt/server
+COPY *.py .
+COPY requirements.txt .
+COPY payment.ini .
+RUN dnf install -r requirements.txt
+CMD ["uwsgi" , "--ini", "payment.ini"]

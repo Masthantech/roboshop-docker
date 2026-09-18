@@ -1,0 +1,44 @@
+networks:
+  default:
+    driver: bridge
+    name: roboshop
+    external: true #if you already created network using docker network create command
+services:
+  mongodb:
+    image: khizar111/mongodb:v1
+    container_name: mongodb
+  catalogue:
+    image: khizar111/catalogue:v1
+    container_name: catalogue
+    depends_on:
+    - mongodb
+  redis:
+    image: redis:7.0  #here we are directly running redis images from docker hub, bcz we ar enot loading anything in redis
+    container_name: redis
+  user:
+    image: khizar111/user:v1
+    container_name: user
+    depends_on: 
+    - redis
+    - mongodb
+  cart: 
+    image: khizar111/cart:v1
+    container_name: cart
+    depends_on:
+    - redis
+    - catalogue
+  mysql:
+    image: khizar111/mysql:v1
+    container_name: mysql
+  shipping:
+    image: khizar111/shipping:v1
+    container_name: shipping
+    depends_on: 
+    - cart
+    - mysql     
+  rabbitmq:
+    image: rabbitmq:3
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123          
