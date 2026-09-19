@@ -1,4 +1,4 @@
-FROM python:3.9.23-alpine3.22
+FROM python:3.9
 EXPOSE 8080
 WORKDIR /opt/server
 RUN install gcc -y
