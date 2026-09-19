@@ -1,7 +1,6 @@
 FROM python:3.9
 EXPOSE 8080
 WORKDIR /opt/server
-RUN install gcc -y
 COPY *.py .
 COPY requirements.txt  .
 COPY payment.ini  .
