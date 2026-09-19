@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:alpine3.24
 EXPOSE 8080
 WORKDIR /opt/server
 COPY *.py .
