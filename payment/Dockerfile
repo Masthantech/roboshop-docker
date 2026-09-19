@@ -1,7 +1,7 @@
 FROM python:3.9.23-alpine3.22
 EXPOSE 8080
 WORKDIR /opt/server
-RUN dnf install gcc -y
+RUN install gcc -y
 COPY *.py .
 COPY requirements.txt  .
 COPY payment.ini  .
