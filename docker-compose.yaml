@@ -13,7 +13,7 @@ services:
     image: khizar111/mongodb:v1
     container_name: mongodb
     volumes:
-    - mongodb: /data/db
+    - mongodb:/data/db
   catalogue:
     image: khizar111/catalogue:v1
     container_name: catalogue
@@ -23,7 +23,7 @@ services:
     image: redis:7.0  #here we are directly running redis images from docker hub, bcz we ar enot loading anything in redis
     container_name: redis
     volumes:
-    - redis: /data
+    - redis:/data
   user:
     image: khizar111/user:v1
     container_name: user
@@ -40,7 +40,7 @@ services:
     image: khizar111/mysql:v1
     container_name: mysql
     volumes:
-    - mysql: /var/lib/mysql
+    - mysql:/var/lib/mysql
   shipping:
     image: khizar111/shipping:v1
     container_name: shipping
@@ -51,7 +51,7 @@ services:
     image: rabbitmq:3
     container_name: rabbitmq
     volumes:
-    - rabbitmq: /var/lib/rabbitmq    
+    - rabbitmq:/var/lib/rabbitmq    
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123      
