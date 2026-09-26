@@ -1,4 +1,4 @@
-FROM python:3.9 as builder
+FROM python:3.9-alpine AS builder
 WORKDIR /opt/server
 #COPY *.py .
 COPY requirements.txt .
