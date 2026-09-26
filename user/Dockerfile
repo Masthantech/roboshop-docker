@@ -4,7 +4,7 @@ COPY package.json .
 COPY *.js .
 RUN npm install
 
-FROM node:20-apline3.21
+FROM node:20-alpine3.21
 WORKDIR /opt/server
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /opt/server
