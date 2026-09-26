@@ -10,12 +10,12 @@ volumes:
   rabbitmq:
 services:
   mongodb:
-    image: mongodb:v1
+    image: khizar/mongodb:v1
     container_name: mongodb
     volumes:
     - mongodb:/data/db
   catalogue:
-    image: catalogue:v1
+    image: khizar/catalogue:v1
     container_name: catalogue
     depends_on:
     - mongodb
@@ -25,24 +25,24 @@ services:
     volumes:
     - redis:/data
   user:
-    image: user:v1
+    image: khizar/user:v1
     container_name: user
     depends_on: 
     - redis
     - mongodb
   cart: 
-    image: cart:v1
+    image: khizar/cart:v1
     container_name: cart
     depends_on:
     - redis
     - catalogue
   mysql:
-    image: mysql:v1
+    image: khizar/mysql:v1
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
   shipping:
-    image: shipping:v1
+    image: khizar/shipping:v1
     container_name: shipping
     depends_on: 
     - cart
@@ -56,7 +56,7 @@ services:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123      
   payment:
-    image: payment:v1
+    image: khizar/payment:v1
     container_name: payment
     environment:
       CART_HOST: cart
@@ -71,7 +71,7 @@ services:
     - user
     - rabbitmq
   frontend:
-    image: frontend:v1
+    image: khizar/frontend:v1
     container_name: frontend
     ports:
     - "80:80"
