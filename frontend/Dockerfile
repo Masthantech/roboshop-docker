@@ -6,5 +6,5 @@
 # COPY nginx.conf /etc/nginx/nginx.conf
 # CMD ["nginx", "-g", "daemon off;"]
 
-FROM nginx 
+FROM nginx:1.24
 
