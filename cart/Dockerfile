@@ -8,8 +8,8 @@ FROM node:20-alpine3.21
 WORKDIR /opt/server
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /opt/server
-    CATALOGUE_HOST="catalogue" \
-    CATALOGUE_PORT="8080"
+ENV CATALOGUE_HOST="catalogue" \
+    CATALOGUE_PORT="8080" 
 COPY --from=builder /opt/server  /opt/server
 USER roboshop
 CMD ["node" , "server.js"]  
