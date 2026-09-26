@@ -1,9 +1,10 @@
 FROM maven:3.9.16 as builder
 WORKDIR /opt/server
 COPY pom.xml .
+COPY src /opt/server/src 
 RUN mvn clean package && \
     mv target/shipping-1.0.jar shipping.jar
-COPY src /opt/server/src 
+
 
 FROM eclipse-temurin:17-jre-alpine 
 WORKDIR /opt/server
