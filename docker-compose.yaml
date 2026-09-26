@@ -2,59 +2,59 @@ networks:
   default:
     driver: bridge
     name: roboshop
-    external: true #if you already created network using docker network create command
+    #external: true #I created network already using docker network create roboshop
 volumes:
   mongodb:
   redis:
   mysql:
-  rabbitmq:
+  rabbitmq: # docker volume create rabbitmq
 services:
   mongodb:
-    image: khizar111/mongodb:v1
+    image: khizar/mongodb:v1
     container_name: mongodb
     volumes:
     - mongodb:/data/db
   catalogue:
-    image: khizar111/catalogue:v1
+    image: khizar/catalogue:v1
     container_name: catalogue
     depends_on:
     - mongodb
   redis:
-    image: redis:7.0  #here we are directly running redis images from docker hub, bcz we ar enot loading anything in redis
+    image: redis:7.0
     container_name: redis
     volumes:
     - redis:/data
   user:
-    image: khizar111/user:v1
+    image: khizar/user:v1
     container_name: user
-    depends_on: 
-    - redis
-    - mongodb
-  cart: 
-    image: khizar111/cart:v1
-    container_name: cart
     depends_on:
     - redis
+    - mongodb
+  cart:
+    image: khizar/cart:v1
+    container_name: cart
+    depends_on:
     - catalogue
+    - redis
   mysql:
-    image: khizar111/mysql:v1
+    image: khizar/mysql:v1
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
   shipping:
-    image: khizar111/shipping:v1
+    image: khizar/shipping:v1
     container_name: shipping
-    depends_on: 
+    depends_on:
+    - mysql
     - cart
-    - mysql     
   rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
-    volumes:
-    - rabbitmq:/var/lib/rabbitmq    
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
-      RABBITMQ_DEFAULT_PASS: roboshop123     
+      RABBITMQ_DEFAULT_PASS: roboshop123
+    volumes:
+    - rabbitmq:/var/lib/rabbitmq
   payment:
     image: khizar111/payment:v1
     container_name: payment
@@ -65,11 +65,11 @@ services:
       USER_PORT: 8080
       AMQP_HOST: rabbitmq
       AMQP_USER: roboshop
-      AMQP_PASS: roboshop123    
+      AMQP_PASS: roboshop123
     depends_on:
+    - rabbitmq
     - cart
     - user
-    - rabbitmq
   frontend:
     image: khizar111/frontend:v1
     container_name: frontend
