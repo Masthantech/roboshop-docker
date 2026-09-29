@@ -55,6 +55,7 @@ services:
     volumes:
     - rabbitmq:/var/lib/rabbitmq  
   payment:
+    build: ./payment
     image: khizar111/payment:v1
     container_name: payment
     environment:
