@@ -19,6 +19,13 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers \
 FROM python:3.9.25-alpine3.22
 WORKDIR /app
 EXPOSE 8080
+ENV CART_HOST:"cart" \
+    CART_PORT:"8080" \
+    USER_HOST:"user" \
+    USER_PORT:"8080" \
+    AMQP_HOST:"rabbitmq" \
+    AMQP_USER:"roboshop" \
+    AMQP_PASS:"roboshop123"
 RUN addgroup -S roboshop && adduser -S -G roboshop roboshop && \
     chown -R roboshop:roboshop /app
 COPY  --from=builder /install /usr/local
