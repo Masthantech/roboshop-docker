@@ -2,7 +2,7 @@ networks:
   default:
     driver: bridge
     name: roboshop
-    external: true
+    external: false
 volumes:
   mongodb:
   redis:
@@ -10,11 +10,13 @@ volumes:
   rabbitmq:    
 services:
   mongodb:
+    build: ./mongodb
     image: khizar111/mongodb:v1
     container_name: mongodb
     volumes:
     - mongodb:/data/db
   catalogue:
+    build: ./catalogue
     image: khizar111/catalogue:v1 
     container_name: catalogue
     depends_on: 
@@ -25,23 +27,27 @@ services:
     volumes:
     - redis:/data
   user:
+    build: ./user
     image: khizar111/user:v1
     container_name: user
     depends_on:  
     - redis
     - mongodb
   cart:   
+    build: ./cart
     image: khizar111/cart:v1
     container_name: cart  
     depends_on:
     - catalogue
     - redis
   mysql:
+    build: ./mysql
     image: khizar111/mysql:v1
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
   shipping: 
+    build: ./shipping
     image: khizar111/shipping:v1
     container_name: shipping
     depends_on:
@@ -71,6 +77,7 @@ services:
     - cart
     - user
   frontend:
+    build: ./frontend
     image: khizar111/frontend:v1
     container_name: frontend
     ports:
