@@ -12,7 +12,7 @@
 FROM python:3.9.25-alpine3.22 AS builder
 WORKDIR /app
 COPY requirements.txt .
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers python3-dev \
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers \
     && pip3 install --prefix=/install -r requirements.txt \
     && apk del .build-deps
 
